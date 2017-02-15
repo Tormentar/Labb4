@@ -1,8 +1,10 @@
+package lab4;
+
 import lab4.data.*;
 import lab4.client.*;
 import lab4.gui.*;
 
-package lab4;
+
 
 public class GomokuMain {
 private int port = 4001;
