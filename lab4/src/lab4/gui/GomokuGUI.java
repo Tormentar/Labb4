@@ -1,4 +1,5 @@
 package lab4.gui;
+
 import java.util.Observable;
 import java.util.Observer;
 
