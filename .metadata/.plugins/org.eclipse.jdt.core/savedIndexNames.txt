@@ -4,7 +4,6 @@ INDEX VERSION 1.129+C:\Users\robin\git\Labb4\.metadata\.plugins\org.eclipse.jdt.
 220789872.index
 1631616599.index
 2250812846.index
-1968947691.index
 4290700143.index
 69564303.index
 909861168.index
