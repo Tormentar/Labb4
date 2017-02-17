@@ -14,14 +14,17 @@ import lab4.client.GomokuClient;
 
 public class GomokuGameState extends Observable implements Observer{
 
-   // Game variables
+   
+	// Game variables
 	private final int DEFAULT_SIZE = 15;
 	private GameGrid gameGrid;
 	
     //Possible game states
 	private final int NOT_STARTED = 0;
 	private int currentState;
-	
+	private final int MY_TURN = 1;
+    private final int OTHER_TURN = 2;
+    private final int FINISHED = 3;
 	private GomokuClient client;
 	
 	private String message;
@@ -45,7 +48,9 @@ public class GomokuGameState extends Observable implements Observer{
 	 * 
 	 * @return the message string
 	 */
-	public String getMessageString(){}
+	public String getMessageString(){
+		return message;
+	}
 	
 	/**
 	 * Returns the game grid
@@ -60,7 +65,15 @@ public class GomokuGameState extends Observable implements Observer{
 	 * @param x the x coordinate
 	 * @param y the y coordinate
 	 */
-	public void move(int x, int y){}
+	public void move(int x, int y){
+		if (currentState == MY_TURN) {
+			sendMoveMessage();
+			
+			
+		}
+		message = "Wait for your turn to move.";
+		notifyObservers();
+	}
 	
 	/**
 	 * Starts a new game with the current client
