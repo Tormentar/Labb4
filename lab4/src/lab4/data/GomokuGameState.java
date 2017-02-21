@@ -68,10 +68,10 @@ public class GomokuGameState extends Observable implements Observer{
 	 * @param y the y coordinate
 	 */
 	public void move(int x, int y){
-		if (currentState == MY_TURN && GameGrid.move(x, y, GameGrid.ME ) == true) {
+		if (currentState == MY_TURN && gameGrid.move(x, y, gameGrid.ME) == true) {
 			client.sendMoveMessage(x, y);
 			message = "Move successful";
-			if (GameGrid.isWinner(GameGrid.ME) == true) {
+			if (gameGrid.isWinner(gameGrid.ME) == true) {
 				currentState = FINISHED;
 			}notifyObservers();
 			return;
@@ -86,7 +86,7 @@ public class GomokuGameState extends Observable implements Observer{
 	 * Starts a new game with the current client
 	 */
 	public void newGame(){
-		GameGrid.clearGrid();
+		gameGrid.clearGrid();
 		currentState = OTHER_TURN;
 		message = "New Game Starting..";
 		client.sendNewGameMessage();
@@ -100,7 +100,7 @@ public class GomokuGameState extends Observable implements Observer{
 	 */
 	public void receivedNewGame(){
 		currentState = MY_TURN;
-		GameGrid.clearGrid();
+		gameGrid.clearGrid();
 		message = "Received New Game..";
 		notifyObservers();
 	}
@@ -111,7 +111,7 @@ public class GomokuGameState extends Observable implements Observer{
 	 */
 	public void otherGuyLeft(){
 		currentState = FINISHED;
-		GameGrid.clearGrid();
+		gameGrid.clearGrid();
 		message = "Opponent Left.";
 		notifyObservers();
 	}
@@ -121,7 +121,7 @@ public class GomokuGameState extends Observable implements Observer{
 	 */
 	public void disconnect(){
 		currentState = FINISHED;
-		GameGrid.clearGrid();
+		gameGrid.clearGrid();
 		client.disconnect();
 		message = "Disconnected";
 		notifyObservers();
@@ -135,8 +135,7 @@ public class GomokuGameState extends Observable implements Observer{
 	 * @param y The y coordinate of the move
 	 */
 	public void receivedMove(int x, int y){
-		update();
-		if (GameGrid.isWinner(GameGrid.OTHER) == true) {
+		if (gameGrid.isWinner(gameGrid.OTHER) == true) {
 			currentState = FINISHED;
 			message = "You Lose!";
 		}

@@ -9,9 +9,9 @@ import java.util.Observable;
 
 public class GameGrid extends Observable{
 	int [][] gameGrid;
-	public static int EMPTY = 0;
-	public static int OTHER = 2;
-	public static int ME = 1;
+	public static final int EMPTY = 0;
+	public static final int OTHER = 2;
+	public static final int ME = 1;
 	public static int INROW = 5;
 	private int currentINROW = 0;
 	private int corrector = 0;
@@ -104,7 +104,7 @@ public class GameGrid extends Observable{
 		return 0;
 	}
 */	
-	public boolean checkVertical(int player) {
+	private boolean checkVertical(int player) {
 		int size = this.gameGrid[0].length;
 		
 		for(int x = (size - 1); x >= 0; x--) {
@@ -131,7 +131,7 @@ public class GameGrid extends Observable{
 		return false;
 	}
 	
-	public boolean checkHorizontal(int player) {
+	private boolean checkHorizontal(int player) {
 		int size = this.gameGrid[0].length;
 		
 		for(int y = 0; y <= (size - 1); y++) {
@@ -186,7 +186,7 @@ public class GameGrid extends Observable{
 	}
 	
 	
-	public boolean checkDiagonalDownRight(int player) {
+	private boolean checkDiagonalDownRight(int player) {
 		int size = this.gameGrid[0].length - 1;
 		
 		for(int x = size; x >= 0; x--) {
@@ -218,7 +218,7 @@ public class GameGrid extends Observable{
 	}
 	
 	
-	public boolean checkDiagonalDownLeft(int player) {
+	private boolean checkDiagonalDownLeft(int player) {
 		int size = this.gameGrid[0].length - 1;
 		
 		for(int x = 0; x <= size; x++) {

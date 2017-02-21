@@ -35,7 +35,7 @@ public class GomokuGUI implements Observer{
 		gamestate.addObserver(this);
 		
 		JFrame mainWindow = new JFrame();
-		GamePanel gameGridPanel = new GamePanel((lab4.gui.GamePanel) gameGridPanel); // NULL = PLACEHOLDER
+		GamePanel gameGridPanel = new GamePanel(g.getGameGrid()); // NULL = PLACEHOLDER
 		JLabel messageLabel = new JLabel();
 		JButton newGameButton = new JButton("New Game");
 		JButton connectButton = new JButton("Connect");
@@ -58,14 +58,7 @@ public class GomokuGUI implements Observer{
 			    ConnectionWindow joinGame = new ConnectionWindow(client);
 			  } 
 			} );
-		
-		
-		
-	}
-	
-	
-	public boolean connectClient() {
-		
+			
 	}
 
 	
