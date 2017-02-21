@@ -49,10 +49,10 @@ public class GomokuGUI implements Observer{
 		JPanel mainPanel = new JPanel();
 		SpringLayout spring = new SpringLayout();
 		GamePanel gameGridPanel = new GamePanel(g.getGameGrid()); // NULL = PLACEHOLDER
-		JLabel messageLabel = new JLabel();
-		JButton newGameButton = new JButton("New Game");
-		JButton connectButton = new JButton("Connect");
-		JButton disconnectButton = new JButton("Disconnect");
+		this.messageLabel = new JLabel();
+		this. newGameButton = new JButton("New Game");
+		this.connectButton = new JButton("Connect");
+		this.disconnectButton = new JButton("Disconnect");
 		System.out.println("podkas");
 		
 		newGameButton.addActionListener(new ActionListener() { 
@@ -79,26 +79,29 @@ public class GomokuGUI implements Observer{
 		Component newgame = newGameButton;
 		Component connect = connectButton;
 		Component disconnect = disconnectButton;
+		Component message = messageLabel;
 		mainContainer.setLayout(spring);
 		
 		mainContainer.add(newgame);
 		mainContainer.add(connect);
 		mainContainer.add(disconnect);
-		mainContainer.add(gameGridPanel);
+//		mainContainer.add(gameGridPanel);
+		mainContainer.add(message);
 		
 //		mainContainer.add(disconnectButton);
 //		mainContainer.add(connectButton);
 //		mainPanel.add(messageLabel);
 		
-		spring.putConstraint(SpringLayout.WEST, gameGridPanel, 5, SpringLayout.WEST, mainContainer);
-		spring.putConstraint(SpringLayout.NORTH, gameGridPanel, 5, SpringLayout.NORTH, mainContainer);
+//		spring.putConstraint(SpringLayout.WEST, gameGridPanel, 5, SpringLayout.WEST, mainContainer);
+//		spring.putConstraint(SpringLayout.NORTH, gameGridPanel, 5, SpringLayout.NORTH, mainContainer);
 		spring.putConstraint(SpringLayout.WEST, newGameButton, 10, SpringLayout.WEST, mainContainer);
 		spring.putConstraint(SpringLayout.NORTH, newGameButton, 320, SpringLayout.NORTH, mainContainer);
 		spring.putConstraint(SpringLayout.WEST, connectButton, 10, SpringLayout.EAST, newGameButton);
-		spring.putConstraint(SpringLayout.NORTH, connectButton, 320, SpringLayout.WEST, mainPanel);
+		spring.putConstraint(SpringLayout.NORTH, connectButton, 320, SpringLayout.WEST, mainContainer);
 		spring.putConstraint(SpringLayout.WEST, disconnectButton, 10, SpringLayout.EAST, connectButton);
-		spring.putConstraint(SpringLayout.NORTH, disconnectButton, 320, SpringLayout.WEST, mainPanel);
-		
+		spring.putConstraint(SpringLayout.NORTH, disconnectButton, 320, SpringLayout.WEST, mainContainer);
+		spring.putConstraint(SpringLayout.NORTH, messageLabel, 10, SpringLayout.NORTH, connectButton);
+		spring.putConstraint(SpringLayout.SOUTH, messageLabel, 10, SpringLayout.SOUTH, mainContainer);
 		
 //		mainPanel.add(gameGridPanel);
 		
@@ -106,7 +109,7 @@ public class GomokuGUI implements Observer{
 		
 		mainWindow.add(mainPanel);
 //		mainWindow.pack();
-		mainWindow.setSize(500, 400);
+		mainWindow.setSize(400, 500);
 		mainWindow.setVisible(true);
 		
 		

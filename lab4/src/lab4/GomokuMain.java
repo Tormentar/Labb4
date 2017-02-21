@@ -29,12 +29,14 @@ public class GomokuMain {
 		
 		GomokuClient client = new GomokuClient(port);
 		GomokuGameState gameState = new GomokuGameState(client);
-		System.out.println("das");
 		GomokuGUI gui = new GomokuGUI(gameState, client);
-		System.out.println("odka");
+//		GomokuClient client2 = new GomokuClient(4040);
+//		GomokuGameState gameState2 = new GomokuGameState(client);
+//		GomokuGUI gui2 = new GomokuGUI(gameState, client);
 		
 		
 		
 	}
 
 }
+
