@@ -24,7 +24,7 @@ import lab4.data.GomokuGameState;
  * The GUI class
  */
 
-public class GomokuGUI implements Observer{
+public class GomokuGUI implements Observer {
 
 	private GomokuClient client;
 	private GomokuGameState gamestate;
@@ -50,10 +50,10 @@ public class GomokuGUI implements Observer{
 		SpringLayout spring = new SpringLayout();
 		GamePanel gameGridPanel = new GamePanel(g.getGameGrid()); // NULL = PLACEHOLDER
 		this.messageLabel = new JLabel();
-		this. newGameButton = new JButton("New Game");
+		this.newGameButton = new JButton("New Game");
 		this.connectButton = new JButton("Connect");
 		this.disconnectButton = new JButton("Disconnect");
-		System.out.println("podkas");
+		
 		
 		newGameButton.addActionListener(new ActionListener() { 
 			  public void actionPerformed(ActionEvent a) { 
@@ -100,8 +100,8 @@ public class GomokuGUI implements Observer{
 		spring.putConstraint(SpringLayout.NORTH, connectButton, 320, SpringLayout.WEST, mainContainer);
 		spring.putConstraint(SpringLayout.WEST, disconnectButton, 10, SpringLayout.EAST, connectButton);
 		spring.putConstraint(SpringLayout.NORTH, disconnectButton, 320, SpringLayout.WEST, mainContainer);
-		spring.putConstraint(SpringLayout.NORTH, messageLabel, 10, SpringLayout.NORTH, connectButton);
-		spring.putConstraint(SpringLayout.SOUTH, messageLabel, 10, SpringLayout.SOUTH, mainContainer);
+		spring.putConstraint(SpringLayout.NORTH, messageLabel, 10, SpringLayout.NORTH, mainContainer);
+		spring.putConstraint(SpringLayout.WEST, messageLabel, 10, SpringLayout.WEST, mainContainer);
 		
 //		mainPanel.add(gameGridPanel);
 		
@@ -136,6 +136,7 @@ public class GomokuGUI implements Observer{
 		
 		// Update the status text if the gamestate has changed
 		if(arg0 == gamestate){
+			System.out.println("hej");
 			messageLabel.setText(gamestate.getMessageString());
 		}
 		
