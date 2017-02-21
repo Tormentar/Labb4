@@ -1,7 +1,13 @@
 package lab4.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import lab4.client.GomokuClient;
 import lab4.data.GameGrid;
@@ -28,9 +34,40 @@ public class GomokuGUI implements Observer{
 		client.addObserver(this);
 		gamestate.addObserver(this);
 		
+		JFrame mainWindow = new JFrame();
+		GamePanel gameGridPanel = new GamePanel((lab4.gui.GamePanel) gameGridPanel); // NULL = PLACEHOLDER
+		JLabel messageLabel = new JLabel();
+		JButton newGameButton = new JButton("New Game");
+		JButton connectButton = new JButton("Connect");
+		JButton disconnectButton = new JButton("Disconnect");
+		
+		newGameButton.addActionListener(new ActionListener() { 
+			  public void actionPerformed(ActionEvent a) { 
+			    g.newGame();
+			  } 
+			} );
+		
+		disconnectButton.addActionListener(new ActionListener() { 
+			  public void actionPerformed(ActionEvent b) { 
+			    g.disconnect();
+			  } 
+			} );
+		
+		connectButton.addActionListener(new ActionListener() { 
+			  public void actionPerformed(ActionEvent c) { 
+			    ConnectionWindow joinGame = new ConnectionWindow(client);
+			  } 
+			} );
+		
+		
 		
 	}
 	
+	
+	public boolean connectClient() {
+		
+	}
+
 	
 	public void update(Observable arg0, Object arg1) {
 		

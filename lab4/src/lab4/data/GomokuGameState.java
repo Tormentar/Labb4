@@ -71,7 +71,7 @@ public class GomokuGameState extends Observable implements Observer{
 		if (currentState == MY_TURN && GameGrid.move(x, y, GameGrid.ME ) == true) {
 			client.sendMoveMessage(x, y);
 			message = "Move successful";
-			if (GameGrid.IsWinner(GameGrid.ME) == true) {
+			if (GameGrid.isWinner(GameGrid.ME) == true) {
 				currentState = FINISHED;
 			}notifyObservers();
 			return;
@@ -136,7 +136,7 @@ public class GomokuGameState extends Observable implements Observer{
 	 */
 	public void receivedMove(int x, int y){
 		update();
-		if (GameGrid.IsWinner(GameGrid.OTHER) == true) {
+		if (GameGrid.isWinner(GameGrid.OTHER) == true) {
 			currentState = FINISHED;
 			message = "You Lose!";
 		}
