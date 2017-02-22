@@ -65,6 +65,8 @@ public class GameGrid extends Observable{
 			System.out.println("asdase");
 			this.gameGrid[y][x] = player;
 			System.out.println("gsdlg");
+			setChanged();
+			notifyObservers();
 			return true;
 		
 		} else {
