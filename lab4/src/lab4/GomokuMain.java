@@ -4,6 +4,11 @@ import lab4.data.*;
 import lab4.client.*;
 import lab4.gui.*;
 
+/**
+ * Main of the program.
+ * @author David, Robin
+ *
+ */
 
 
 public class GomokuMain {

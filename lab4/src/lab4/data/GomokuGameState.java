@@ -9,25 +9,25 @@ import java.util.Observer;
 import lab4.client.GomokuClient;
 
 /**
- * Represents the state of a game
+ * Represents the state of the game
+ * @author David
+ *
  */
 
 public class GomokuGameState extends Observable implements Observer{
 
    
 	// Game variables
-	private final int DEFAULT_SIZE = 15;
+	public final int DEFAULT_SIZE = 15;
 	private GameGrid gameGrid;
-	
+	private GomokuClient client;
+	private String message;
     //Possible game states
 	private final int NOT_STARTED = 0;
-	private int currentState;
 	private final int MY_TURN = 1;
     private final int OTHER_TURN = 2;
     private final int FINISHED = 3;
-	private GomokuClient client;
-	
-	private String message;
+    private int currentState;
 	
 	/**
 	 * The constructor
@@ -159,7 +159,9 @@ public class GomokuGameState extends Observable implements Observer{
 		}
 		
 	}
-	
+	/**
+	 * Updates between OTHER and ME.
+	 */
 	public void update(Observable o, Object arg) {
 		
 		switch(client.getConnectionStatus()){

@@ -23,8 +23,10 @@ import lab4.client.GomokuClient;
 import lab4.data.GameGrid;
 import lab4.data.GomokuGameState;
 
-/*
- * The GUI class
+/**
+ * Represents the GUI of the game.
+ * @author Robin
+ *
  */
 
 public class GomokuGUI implements Observer {
@@ -122,8 +124,8 @@ public class GomokuGUI implements Observer {
 		
 		
 		mainWindow.add(mainPanel);
-//		mainWindow.pack();
-		mainWindow.setSize(400, 500);
+		//mainWindow.pack();
+		mainWindow.setSize(gamestate.DEFAULT_SIZE*GamePanel.UNIT_SIZE+ 45, gamestate.DEFAULT_SIZE*GamePanel.UNIT_SIZE+ 135);
 		mainWindow.setVisible(true);
 		
 		
