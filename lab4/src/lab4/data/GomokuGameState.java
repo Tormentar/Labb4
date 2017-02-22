@@ -40,6 +40,7 @@ public class GomokuGameState extends Observable implements Observer{
 		gc.setGameState(this);
 		currentState = NOT_STARTED;
 		gameGrid = new GameGrid(DEFAULT_SIZE);
+		
 	}
 	
 
@@ -69,11 +70,13 @@ public class GomokuGameState extends Observable implements Observer{
 	 */
 	public void move(int x, int y){
 		if (currentState == MY_TURN && gameGrid.move(x, y, gameGrid.ME) == true) {
+			System.out.println("hee");
 			client.sendMoveMessage(x, y);
 			message = "Move successful";
 			if (gameGrid.isWinner(gameGrid.ME) == true) {
 				currentState = FINISHED;
-			}notifyObservers();
+			}
+			notifyObservers();
 			return;
 		}
 		message = "Wait for your turn to move.";

@@ -30,9 +30,9 @@ public class GomokuMain {
 		GomokuClient client = new GomokuClient(port);
 		GomokuGameState gameState = new GomokuGameState(client);
 		GomokuGUI gui = new GomokuGUI(gameState, client);
-//		GomokuClient client2 = new GomokuClient(4040);
-//		GomokuGameState gameState2 = new GomokuGameState(client);
-//		GomokuGUI gui2 = new GomokuGUI(gameState, client);
+		GomokuClient client2 = new GomokuClient(4040);
+		GomokuGameState gameState2 = new GomokuGameState(client2);
+		GomokuGUI gui2 = new GomokuGUI(gameState2, client2);
 		
 		
 		

@@ -5,6 +5,9 @@ import java.awt.Container;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -48,11 +51,28 @@ public class GomokuGUI implements Observer {
 		JFrame mainWindow = new JFrame("bla");
 		JPanel mainPanel = new JPanel();
 		SpringLayout spring = new SpringLayout();
-		GamePanel gameGridPanel = new GamePanel(g.getGameGrid()); // NULL = PLACEHOLDER
+		GamePanel gameGridPanel = new GamePanel(g.getGameGrid());
 		this.messageLabel = new JLabel();
 		this.newGameButton = new JButton("New Game");
 		this.connectButton = new JButton("Connect");
 		this.disconnectButton = new JButton("Disconnect");
+		
+		
+		
+		gameGridPanel.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int x = e.getX() / 20;
+				int y = e.getY() / 20; // FRÅGA OM MAN KAN ÄNDRA VISIBILITY PÅ UNIT_SIZE I GAMEPANEL SÅ MAN
+										// KAN ANPASSA SIG EFTER STORLEKEN PÅ DEN
+				
+				gamestate.move(x, y);
+				
+				
+			}
+		
+		} );
 		
 		
 		newGameButton.addActionListener(new ActionListener() { 
@@ -85,26 +105,20 @@ public class GomokuGUI implements Observer {
 		mainContainer.add(newgame);
 		mainContainer.add(connect);
 		mainContainer.add(disconnect);
-//		mainContainer.add(gameGridPanel);
+		mainContainer.add(gameGridPanel);
 		mainContainer.add(message);
 		
-//		mainContainer.add(disconnectButton);
-//		mainContainer.add(connectButton);
-//		mainPanel.add(messageLabel);
 		
-//		spring.putConstraint(SpringLayout.WEST, gameGridPanel, 5, SpringLayout.WEST, mainContainer);
-//		spring.putConstraint(SpringLayout.NORTH, gameGridPanel, 5, SpringLayout.NORTH, mainContainer);
+		spring.putConstraint(SpringLayout.WEST, gameGridPanel, 5, SpringLayout.WEST, mainContainer);
+		spring.putConstraint(SpringLayout.NORTH, gameGridPanel, 5, SpringLayout.NORTH, mainContainer);
 		spring.putConstraint(SpringLayout.WEST, newGameButton, 10, SpringLayout.WEST, mainContainer);
-		spring.putConstraint(SpringLayout.NORTH, newGameButton, 320, SpringLayout.NORTH, mainContainer);
+		spring.putConstraint(SpringLayout.NORTH, newGameButton, 10, SpringLayout.SOUTH, gameGridPanel);
 		spring.putConstraint(SpringLayout.WEST, connectButton, 10, SpringLayout.EAST, newGameButton);
-		spring.putConstraint(SpringLayout.NORTH, connectButton, 320, SpringLayout.WEST, mainContainer);
+		spring.putConstraint(SpringLayout.NORTH, connectButton, 10, SpringLayout.SOUTH, gameGridPanel);
 		spring.putConstraint(SpringLayout.WEST, disconnectButton, 10, SpringLayout.EAST, connectButton);
-		spring.putConstraint(SpringLayout.NORTH, disconnectButton, 320, SpringLayout.WEST, mainContainer);
-		spring.putConstraint(SpringLayout.NORTH, messageLabel, 10, SpringLayout.NORTH, mainContainer);
+		spring.putConstraint(SpringLayout.NORTH, disconnectButton, 10, SpringLayout.SOUTH, gameGridPanel);
 		spring.putConstraint(SpringLayout.WEST, messageLabel, 10, SpringLayout.WEST, mainContainer);
-		
-//		mainPanel.add(gameGridPanel);
-		
+		spring.putConstraint(SpringLayout.NORTH, messageLabel, 10, SpringLayout.SOUTH, newGameButton);
 		
 		
 		mainWindow.add(mainPanel);
@@ -136,7 +150,6 @@ public class GomokuGUI implements Observer {
 		
 		// Update the status text if the gamestate has changed
 		if(arg0 == gamestate){
-			System.out.println("hej");
 			messageLabel.setText(gamestate.getMessageString());
 		}
 		

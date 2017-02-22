@@ -27,7 +27,6 @@ public class GamePanel extends JPanel implements Observer{
 		this.setMinimumSize(d);
 		this.setPreferredSize(d);
 		this.setBackground(Color.WHITE);
-	
 			
 	}
 
