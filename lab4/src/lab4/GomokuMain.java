@@ -26,6 +26,9 @@ public class GomokuMain {
 		int port = Integer.parseInt(args[0]);
 		
 		
+//		GameGrid g = new GameGrid(15);
+//		g.isWinner(1);
+		
 		if(args.equals(null)) {
 			System.out.println("The port you entered didnt exist, default port used");
 			port = 5012;

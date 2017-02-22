@@ -42,6 +42,7 @@ public class GameGrid extends Observable{
 		return this.gameGrid[y][x];
 		
 	}
+	
 	/**
 	 * Returns the size of the grid
 	 * 
@@ -63,8 +64,10 @@ public class GameGrid extends Observable{
 	public boolean move(int x, int y, int player){
 		if(this.gameGrid[y][x] == EMPTY) {
 			this.gameGrid[y][x] = player;
+			setChanged();
+			notifyObservers();
 			return true;
-		
+			
 		} else {
 			return false;
 		}
@@ -161,6 +164,7 @@ public class GameGrid extends Observable{
 	
 	private int checkDiagonally(int x, int y, int checkNewRowVariable, int player) {
 		if(this.gameGrid[y][x] == EMPTY) {
+			System.out.println("1   EMPTY (" + x + ", " + y + ") --- " + "corr = " + corrector + " , new row = " + checkNewRow);
 			currentINROW = 0;
 			corrector += 1;
 			
@@ -180,6 +184,7 @@ public class GameGrid extends Observable{
 			checkNewRow += 1;
 			currentINROW = 0;
 			corrector = 0;
+			System.out.println("          DIAGONAL BRYT");
 			return 1;
 		}
 		
@@ -190,42 +195,54 @@ public class GameGrid extends Observable{
 	private boolean checkDiagonalDownRight(int player) {
 		int size = this.gameGrid[0].length - 1;
 		
+		System.out.println("DOWNRIGHT BEGIN");
+		
 		for(int x = size; x >= 0; x--) {
 			for(int y = 0; y <= size; y++) {
-				if(checkDiagonally((x + corrector), y, y, player) == 1) {
-					System.out.println("break");
+				System.out.print("DownRightFörsta   ");
+				
+				int placeholder = checkDiagonally((x + corrector), y, y, player);
+				
+				if(placeholder == 1) {
+					placeholder = 0;
 					break;
+				
+				} else if (placeholder == 2) {
+					placeholder = 0;
+					return true;
 				}
 				
+		/*		
+				if(checkDiagonally((x + corrector), y, y, player) == 1) {
+					break;
+				}
+				System.out.print("ÖLAÖLAÖLÖL   ");
 				if(checkDiagonally((x + corrector), y, y, player) == 2) {
 					return true;
 				
 				} else {
 					corrector -= 1;
 				}
-					
+		*/			
 			}
 		}
 		resetCounters();
 		
+		
 		for(int y = size; y >= 0; y--) {
 			for(int x = 0; x <= size; x++) {
-				System.out.println("andra snörra");
+				System.out.print("DownRightAndra    ");
+				int placeholder2 = (checkDiagonally(x, (y + corrector), x, player));
 				
-				if(checkDiagonally(x, (y + corrector), x, player) == 1) {
-					System.out.println("break2");
+				if(placeholder2 == 1) {
 					break;
-				}
-				
-				if(checkDiagonally(x, (y + corrector), x, player) == 2) {
+					
+				} else if (placeholder2 == 2) {
 					return true;
-				
-				} else {
-					corrector -= 1;
 				}
 			}	
 		}
-		System.out.println("downright");
+		System.out.println("downrightdone");
 		resetCounters();
 		return false;
 	}
@@ -237,6 +254,17 @@ public class GameGrid extends Observable{
 		
 		for(int x = 0; x <= size; x++) {
 			for(int y = 0; y <= size; y++) {
+				
+				System.out.print("DownLeftFörsta    ");
+				int placeholder2 = checkDiagonally((x - corrector), y, y, player);
+				
+				if(placeholder2 == 1) {
+					break;
+					
+				} else if (placeholder2 == 2) {
+					return true;
+				}
+		/*		
 				if(checkDiagonally((x - corrector), y, y, player) == 1) {
 					break;
 				}
@@ -247,21 +275,18 @@ public class GameGrid extends Observable{
 				} else {
 					corrector -= 1;
 				}
-			}
+		*/	}
 		}
 		
 		resetCounters();
 		checkNewRow = 0;
+	
 		
 		for(int y = 0; y <= size; y++) {
 			for(int x = size; x >= 0; x--) {
-				System.out.println("corrector = " + corrector);
-				System.out.println("X = " + x);
-				System.out.println("Y = " + y);
-				System.out.println("check new = " + checkNewRow);
-				
-				
+				System.out.print("DownLeftAndra    ");
 				if(this.gameGrid[y + corrector][x] == EMPTY) {
+					System.out.println("2   EMPTY (" + x + ", " + (y + corrector) + ")   " + "corrector2 = " + corrector + "   new row = " + checkNewRow);
 					currentINROW = 0;
 					corrector += 1;
 					
@@ -277,16 +302,16 @@ public class GameGrid extends Observable{
 					resetCounters();
 					return true;
 				} 
-				System.out.println("---");
 				if(x == checkNewRow) {
 					checkNewRow += 1;
 					currentINROW = 0;
 					corrector = 0;
+					System.out.println("	break");
 					break;
 				}
 			}	
 		}
-		System.out.println("downleft");
+		System.out.println("downleftdone");
 		resetCounters();
 		return false;
 		
