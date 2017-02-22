@@ -85,7 +85,6 @@ public class GomokuGameState extends Observable implements Observer{
 		if (currentState == OTHER_TURN) {
 			message = "Wait for your turn to move.";
 		}
-		
 		setChanged();
 		notifyObservers();
 	}
