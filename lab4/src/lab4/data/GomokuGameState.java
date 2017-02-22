@@ -76,6 +76,9 @@ public class GomokuGameState extends Observable implements Observer{
 			message = "Move successful";
 			if (gameGrid.isWinner(gameGrid.ME) == true) {
 				currentState = FINISHED;
+				message = "You Won!";
+				gameGrid.clearGrid();
+				System.out.println("gsgas");
 			}
 			setChanged();
 			notifyObservers();
@@ -145,18 +148,19 @@ public class GomokuGameState extends Observable implements Observer{
 	 * @param y The y coordinate of the move
 	 */
 	public void receivedMove(int x, int y){
-		if (gameGrid.isWinner(gameGrid.OTHER) == true) {
-			currentState = FINISHED;
-			message = "You Lose!";
-		}
 		if (currentState == OTHER_TURN && gameGrid.move(x, y, gameGrid.OTHER) == true) {
 			System.out.println("hee2");
 			client.sendMoveMessage(x, y);
 			currentState = MY_TURN;
 			message = "Your turn";
-			setChanged();
-			notifyObservers();
+			if (gameGrid.isWinner(gameGrid.OTHER) == true) {
+				currentState = FINISHED;
+				message = "You Lose!";
+				gameGrid.clearGrid();
+			}
 		}
+		setChanged();
+		notifyObservers();
 		
 	}
 	/**

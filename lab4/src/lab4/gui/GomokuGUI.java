@@ -65,8 +65,8 @@ public class GomokuGUI implements Observer {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int x = e.getX() / 20;
-				int y = e.getY() / 20; // FRÅGA OM MAN KAN ÄNDRA VISIBILITY PÅ UNIT_SIZE I GAMEPANEL SÅ MAN
+				int x = e.getX() / GamePanel.UNIT_SIZE;
+				int y = e.getY() / GamePanel.UNIT_SIZE; // FRÅGA OM MAN KAN ÄNDRA VISIBILITY PÅ UNIT_SIZE I GAMEPANEL SÅ MAN
 										// KAN ANPASSA SIG EFTER STORLEKEN PÅ DEN
 				
 				gamestate.move(x, y);
