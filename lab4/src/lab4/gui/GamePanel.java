@@ -9,10 +9,12 @@ import lab4.data.GameGrid;
 
 /**
  * A panel providing a graphical view of the game board
+ * @author David
+ *
  */
 
 public class GamePanel extends JPanel implements Observer{
-	private final int UNIT_SIZE = 20;
+	public static final int UNIT_SIZE = 25;
 	private GameGrid grid;
 	
 	/**
@@ -26,8 +28,7 @@ public class GamePanel extends JPanel implements Observer{
 		Dimension d = new Dimension(grid.getSize()*UNIT_SIZE+1, grid.getSize()*UNIT_SIZE+1);
 		this.setMinimumSize(d);
 		this.setPreferredSize(d);
-		this.setBackground(Color.WHITE);
-	
+		this.setBackground(Color.DARK_GRAY);
 			
 	}
 
@@ -50,19 +51,18 @@ public class GamePanel extends JPanel implements Observer{
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		g.setColor(Color.BLACK);
 		for (int x = 0; x < grid.getSize(); x++) {
 			for(int y = 0; y < grid.getSize(); y++) {
+				g.setColor(Color.BLACK);
 				g.drawRect(y*UNIT_SIZE, x*UNIT_SIZE, UNIT_SIZE*(y + 1), UNIT_SIZE*(x + 1));
 				if (grid.getLocation(y, x) == grid.ME) {
+					g.setColor(Color.BLACK);
 					g.fillOval(y*UNIT_SIZE, x*UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
 				} if(grid.getLocation(y, x) == grid.OTHER) {
-					// if this does not work, just use fillOval with a different color (same as above)
-					//like this:
-					// g.setColor(Color.BLACK);
-					// g.fillOval(y*UNIT_SIZE, x*UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
-					g.drawLine(x, y, x+UNIT_SIZE, y+ UNIT_SIZE);
-					g.drawLine(x+UNIT_SIZE, y, x, y+ UNIT_SIZE);
+					g.setColor(Color.WHITE);
+					g.fillOval(y*UNIT_SIZE, x*UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
+				//	g.drawLine(x, y, x+UNIT_SIZE, y+ UNIT_SIZE);
+					//g.drawLine(x+UNIT_SIZE, y, x, y+ UNIT_SIZE);
 					}
 				}
 			}

@@ -12,7 +12,7 @@ public class GameGrid extends Observable{
 	public static final int EMPTY = 0;
 	public static final int OTHER = 2;
 	public static final int ME = 1;
-	public static int INROW = 5;
+	public static int INROW = 2;
 	private int currentINROW = 0;
 	private int corrector = 0;
 	private int checkNewRow = 0;
@@ -63,8 +63,10 @@ public class GameGrid extends Observable{
 	public boolean move(int x, int y, int player){
 		if(this.gameGrid[y][x] == EMPTY) {
 			this.gameGrid[y][x] = player;
+			setChanged();
+			notifyObservers();
 			return true;
-		
+			
 		} else {
 			return false;
 		}
@@ -158,10 +160,9 @@ public class GameGrid extends Observable{
 		return false;
 	}
 	
-	
+	/*
 	private int checkDiagonally(int x, int y, int checkNewRowVariable, int player) {
 		if(this.gameGrid[y][x] == EMPTY) {
-			System.out.println("empty");
 			currentINROW = 0;
 			corrector += 1;
 			
@@ -169,9 +170,7 @@ public class GameGrid extends Observable{
 			System.out.println("player");
 			currentINROW += 1;
 			corrector += 1;
-			
 		}
-		
 		
 		if(checkIfWinner(currentINROW) == true) {
 			System.out.println("should not be here");
@@ -179,10 +178,7 @@ public class GameGrid extends Observable{
 			return 2;
 		}
 		
-		
-		
 		if(checkNewRowVariable == checkNewRow) {
-			System.out.println("guten");
 			checkNewRow += 1;
 			currentINROW = 0;
 			corrector = 0;
@@ -198,11 +194,6 @@ public class GameGrid extends Observable{
 		
 		for(int x = size; x >= 0; x--) {
 			for(int y = 0; y <= size; y++) {
-				System.out.println("corrector = " + corrector);
-				System.out.println("X = " + x);
-				System.out.println("Y = " + y);
-				System.out.println("Check row = " + checkNewRow);
-				
 				if(checkDiagonally((x + corrector), y, y, player) == 1) {
 					System.out.println("break");
 					break;
@@ -230,11 +221,13 @@ public class GameGrid extends Observable{
 				
 				if(checkDiagonally(x, (y + corrector), x, player) == 2) {
 					return true;
+				
 				} else {
 					corrector -= 1;
 				}
 			}	
 		}
+		System.out.println("downright");
 		resetCounters();
 		return false;
 	}
@@ -246,10 +239,6 @@ public class GameGrid extends Observable{
 		
 		for(int x = 0; x <= size; x++) {
 			for(int y = 0; y <= size; y++) {
-				System.out.println("corrector = " + corrector);
-				System.out.println("X = " + x);
-				System.out.println("Y = " + y);
-				
 				if(checkDiagonally((x - corrector), y, y, player) == 1) {
 					break;
 				}
@@ -264,14 +253,20 @@ public class GameGrid extends Observable{
 		}
 		
 		resetCounters();
-		checkNewRow = size;
+		checkNewRow = 0;
 		
-		for(int y = 1; y <= size; y++) {
+		for(int y = 0; y <= size; y++) {
 			for(int x = size; x >= 0; x--) {
+				System.out.println("corrector = " + corrector);
+				System.out.println("X = " + x);
+				System.out.println("Y = " + y);
+				System.out.println("check new = " + checkNewRow);
+				
+				
 				if(this.gameGrid[y + corrector][x] == EMPTY) {
 					currentINROW = 0;
 					corrector += 1;
-					continue;
+					
 					
 				} else if(this.gameGrid[y + corrector][x] == player) {
 					currentINROW += 1;
@@ -280,19 +275,20 @@ public class GameGrid extends Observable{
 				}
 				
 				if(checkIfWinner(currentINROW) == true) {
+					System.out.println("shouldnot");
 					resetCounters();
 					return true;
 				} 
-				
+				System.out.println("---");
 				if(x == checkNewRow) {
-					checkNewRow -= 1;
+					checkNewRow += 1;
 					currentINROW = 0;
 					corrector = 0;
 					break;
 				}
 			}	
 		}
-	
+		System.out.println("downleft");
 		resetCounters();
 		return false;
 		
@@ -306,9 +302,9 @@ public class GameGrid extends Observable{
 	 * @param player the player to check for
 	 * @return true if player has 5 in row, false otherwise
 	 */
-											
+	
 	public boolean isWinner(int player){		
-		if(checkVertical(player) == true || checkHorizontal(player) == true || checkDiagonalDownRight(player) == true || checkDiagonalDownLeft(player) == true) {
+		if(checkVertical(player) == true || checkHorizontal(player) == true) {// || checkDiagonalDownRight(player) == true || checkDiagonalDownLeft(player) == true) {
 			return true;
 		
 		} else {
