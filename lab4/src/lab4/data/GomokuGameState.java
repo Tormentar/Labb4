@@ -78,20 +78,14 @@ public class GomokuGameState extends Observable implements Observer{
 				message = "You Won!";
 				gameGrid.clearGrid();
 			}
-			setChanged();
-			notifyObservers();
-			return;
+		}
+		if(currentState == NOT_STARTED) {
+			message = "No game started";
 		}
 		if (currentState == OTHER_TURN) {
 			message = "Wait for your turn to move.";
-			setChanged();
-			notifyObservers();
-			return;
 		}
-		if(gameGrid.move(x, y, gameGrid.ME) == false || gameGrid.move(x, y, gameGrid.OTHER) == false) {
-			message = "Cannot Place";
-		}
-		message = "No game started";
+		
 		setChanged();
 		notifyObservers();
 	}
