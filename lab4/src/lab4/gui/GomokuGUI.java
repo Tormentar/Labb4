@@ -59,42 +59,30 @@ public class GomokuGUI implements Observer {
 		this.connectButton = new JButton("Connect");
 		this.disconnectButton = new JButton("Disconnect");
 		
-		
-		
-		gameGridPanel.addMouseListener(new MouseAdapter() {
-			
+		gameGridPanel.addMouseListener(new MouseAdapter() {	
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int x = e.getX() / GamePanel.UNIT_SIZE;
-				int y = e.getY() / GamePanel.UNIT_SIZE; // FRÅGA OM MAN KAN ÄNDRA VISIBILITY PÅ UNIT_SIZE I GAMEPANEL SÅ MAN
-										// KAN ANPASSA SIG EFTER STORLEKEN PÅ DEN
-				
+				int y = e.getY() / GamePanel.UNIT_SIZE; 
 				gamestate.move(x, y);
-				
-				
 			}
-		
 		} );
-		
 		
 		newGameButton.addActionListener(new ActionListener() { 
 			  public void actionPerformed(ActionEvent a) { 
 			    g.newGame();
 			  } 
 			} );
-		
 		disconnectButton.addActionListener(new ActionListener() { 
 			  public void actionPerformed(ActionEvent b) { 
 			    g.disconnect();
 			  } 
 			} );
-		
 		connectButton.addActionListener(new ActionListener() { 
 			  public void actionPerformed(ActionEvent c) { 
 			    ConnectionWindow joinGame = new ConnectionWindow(client);
 			  } 
 			} );
-		
 		
 		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Container mainContainer = mainWindow.getContentPane();
@@ -110,7 +98,6 @@ public class GomokuGUI implements Observer {
 		mainContainer.add(gameGridPanel);
 		mainContainer.add(message);
 		
-		
 		spring.putConstraint(SpringLayout.WEST, gameGridPanel, 5, SpringLayout.WEST, mainContainer);
 		spring.putConstraint(SpringLayout.NORTH, gameGridPanel, 5, SpringLayout.NORTH, mainContainer);
 		spring.putConstraint(SpringLayout.WEST, newGameButton, 10, SpringLayout.WEST, mainContainer);
@@ -124,16 +111,9 @@ public class GomokuGUI implements Observer {
 		
 		
 		mainWindow.add(mainPanel);
-		//mainWindow.pack();
 		mainWindow.setSize(gamestate.DEFAULT_SIZE*GamePanel.UNIT_SIZE+ 45, gamestate.DEFAULT_SIZE*GamePanel.UNIT_SIZE+ 135);
 		mainWindow.setVisible(true);
-		
-		
-		
-		
-		
 	}
-
 	
 	public void update(Observable arg0, Object arg1) {
 		
@@ -143,7 +123,7 @@ public class GomokuGUI implements Observer {
 				connectButton.setEnabled(true);
 				newGameButton.setEnabled(false);
 				disconnectButton.setEnabled(false);
-			}else{
+			} else {
 				connectButton.setEnabled(false);
 				newGameButton.setEnabled(true);
 				disconnectButton.setEnabled(true);
@@ -154,7 +134,5 @@ public class GomokuGUI implements Observer {
 		if(arg0 == gamestate){
 			messageLabel.setText(gamestate.getMessageString());
 		}
-		
 	}
-	
 }

@@ -16,7 +16,7 @@ public class GameGrid extends Observable{
 	private int currentINROW = 0;
 	private int corrector = 0;
 	private int checkNewRow = 0;
-	
+	private int currentState = 0;
 	
 	/**
 	 * Constructor
@@ -25,7 +25,6 @@ public class GameGrid extends Observable{
 	 */
 	public GameGrid(int size){
 		this.gameGrid = new int [size][size];
-		
 		for(int i = 0; i < size; i++) {
 			Arrays.fill(this.gameGrid[i], EMPTY);
 		}
@@ -40,7 +39,6 @@ public class GameGrid extends Observable{
 	 */
 	public int getLocation(int x, int y){
 		return this.gameGrid[y][x];
-		
 	}
 	
 	/**
@@ -49,8 +47,7 @@ public class GameGrid extends Observable{
 	 * @return the grid size
 	 */
 	public int getSize(){
-		return this.gameGrid[0].length;
-		
+		return this.gameGrid[0].length;	
 	}
 	
 	/**
@@ -71,7 +68,6 @@ public class GameGrid extends Observable{
 		} else {
 			return false;
 		}
-		
 	}
 	
 	/**
@@ -81,52 +77,52 @@ public class GameGrid extends Observable{
 		for(int i = 0; i < this.gameGrid[0].length; i++) {
 			Arrays.fill(this.gameGrid[i], EMPTY);
 		}
-		
 		setChanged();
 		notifyObservers();
-		
 	}
 	
+	/** 
+	 * Method used by the method isWinner that checks if you have INROW in a row
+	 * @param currentINROW
+	 * @return true if you get INROW in a row, false otherwise
+	 */
 	private boolean checkIfWinner(int currentINROW) {
 		if(currentINROW == INROW) {
 			return true;
+			
 		} else {
 			return false;
-		}
-		
+		}	
 	}
 	
+	/**
+	 * Resets all counters for the method isWinner
+	 */
 	private void resetCounters() {
 		currentINROW = 0;
 		checkNewRow = 0;
 		corrector = 0;
+		currentState = 0;
 	}
 	
-/*	
-	public int resetCurrentINROW() {
-		return 0;
-	}
-*/	
-	private boolean checkVertical(int player) {
-		int size = this.gameGrid[0].length;
-		
-		for(int x = (size - 1); x >= 0; x--) {
-			for(int y = 0; y <= (size - 1); y++) {
-				if(this.gameGrid[y][x] == EMPTY) {
+	/**
+	 * Checks if you get INROW in a row vertically
+	 * @param player the player that's checked
+	 * @return true if you win, false otherwise
+	 */
+	private boolean checkVertical(int player) {	
+		int size = this.gameGrid[0].length -1;
+		for(int x = size; x >= 0; x--) {
+			for(int y = 0; y <= size; y++) {
+				if(this.gameGrid[y][x] == EMPTY || this.gameGrid[y][x] != player) {
 					currentINROW = 0;
-					continue;
 					
 				} else if(this.gameGrid[y][x] == player) {
 					currentINROW += 1;
-					
 				}
-				
 				if(checkIfWinner(currentINROW) == true) {
 					resetCounters();
 					return true;
-				
-				} else {
-					continue;
 				}
 			}	
 		}
@@ -134,48 +130,51 @@ public class GameGrid extends Observable{
 		return false;
 	}
 	
-	private boolean checkHorizontal(int player) {
-		int size = this.gameGrid[0].length;
-		
-		for(int y = 0; y <= (size - 1); y++) {
-			for(int x = (size - 1); x >= 0; x--) {
-				if(this.gameGrid[y][x] == EMPTY) {
+	/**
+	 * Checks if you get INROW in a row horizontally
+	 * @param player the player that's checked
+	 * @return true if you win, false otherwise
+	 */
+	private boolean checkHorizontal(int player) {	
+		int size = this.gameGrid[0].length -1;
+		for(int y = 0; y <= size; y++) {
+			for(int x = size; x >= 0; x--) {
+				if(this.gameGrid[y][x] == EMPTY || this.gameGrid[y][x] != player) {
 					currentINROW = 0;
-					continue;
 					
 				} else if(this.gameGrid[y][x] == player) {
-					currentINROW += 1;
-					
+					currentINROW += 1;	
 				}
 				
 				if(checkIfWinner(currentINROW) == true) {
 					resetCounters();
 					return true;
-				
-				} else {
-					continue;
-				}
-			}	
+				}	
+			}
 		}
 		resetCounters();
 		return false;
 	}
 	
-	
+	/**
+	 * Method used by the methods checkDiagonalDownRight and checkDiagonalDownLeft to check if you get INROW in a row
+	 * @param x x coordinate in the grid
+	 * @param y y coordinate in the grid
+	 * @param checkNewRowVariable keeps track of when to switch column/row, i.e the end of the array
+	 * @param player the player that's checked
+	 * @return 1 if you've reached the end of the array. 2 if you win. 0 otherwise
+	 */
 	private int checkDiagonally(int x, int y, int checkNewRowVariable, int player) {
-		if(this.gameGrid[y][x] == EMPTY) {
-			System.out.println("1   EMPTY (" + x + ", " + y + ") --- " + "corr = " + corrector + " , new row = " + checkNewRow);
+		if(this.gameGrid[y][x] == EMPTY || this.gameGrid[y][x] != player) {
 			currentINROW = 0;
 			corrector += 1;
 			
 		} else if(this.gameGrid[y][x] == player) {
-			System.out.println("player");
 			currentINROW += 1;
 			corrector += 1;
 		}
 		
 		if(checkIfWinner(currentINROW) == true) {
-			System.out.println("should not be here");
 			resetCounters();
 			return 2;
 		}
@@ -184,140 +183,99 @@ public class GameGrid extends Observable{
 			checkNewRow += 1;
 			currentINROW = 0;
 			corrector = 0;
-			System.out.println("          DIAGONAL BRYT");
 			return 1;
 		}
-		
 		return 0;
 	}
 	
-	
+	/**
+	 * Checks if you get INROW in row horizonally down to the right
+	 * @param player the player that's checked
+	 * @return true if you win, false otherwise
+	 */
 	private boolean checkDiagonalDownRight(int player) {
-		int size = this.gameGrid[0].length - 1;
-		
-		System.out.println("DOWNRIGHT BEGIN");
-		
+		int size = this.gameGrid[0].length -1;
 		for(int x = size; x >= 0; x--) {
 			for(int y = 0; y <= size; y++) {
-				System.out.print("DownRightFörsta   ");
+				currentState = checkDiagonally((x + corrector), y, y, player);
 				
-				int placeholder = checkDiagonally((x + corrector), y, y, player);
-				
-				if(placeholder == 1) {
-					placeholder = 0;
+				if(currentState == 1) {
+					currentState = 0;
 					break;
 				
-				} else if (placeholder == 2) {
-					placeholder = 0;
+				} else if (currentState == 2) {
+					currentState = 0;
 					return true;
-				}
-				
-		/*		
-				if(checkDiagonally((x + corrector), y, y, player) == 1) {
-					break;
-				}
-				System.out.print("ÖLAÖLAÖLÖL   ");
-				if(checkDiagonally((x + corrector), y, y, player) == 2) {
-					return true;
-				
-				} else {
-					corrector -= 1;
-				}
-		*/			
+				}		
 			}
 		}
 		resetCounters();
 		
-		
 		for(int y = size; y >= 0; y--) {
 			for(int x = 0; x <= size; x++) {
-				System.out.print("DownRightAndra    ");
-				int placeholder2 = (checkDiagonally(x, (y + corrector), x, player));
+				currentState = (checkDiagonally(x, (y + corrector), x, player));
 				
-				if(placeholder2 == 1) {
+				if(currentState == 1) {
 					break;
 					
-				} else if (placeholder2 == 2) {
+				} else if (currentState == 2) {
 					return true;
 				}
 			}	
 		}
-		System.out.println("downrightdone");
 		resetCounters();
 		return false;
 	}
-	
 
-
+	/**
+	 * Check if you get INROW in a row diagonally down to the left
+	 * @param player the player that's checked
+	 * @return true if you win, false otherwise
+	 */
 	private boolean checkDiagonalDownLeft(int player) {
-		int size = this.gameGrid[0].length - 1;
-		
+		int size = this.gameGrid[0].length -1;
 		for(int x = 0; x <= size; x++) {
 			for(int y = 0; y <= size; y++) {
+				currentState = checkDiagonally((x - corrector), y, y, player);
 				
-				System.out.print("DownLeftFörsta    ");
-				int placeholder2 = checkDiagonally((x - corrector), y, y, player);
-				
-				if(placeholder2 == 1) {
+				if(currentState == 1) {
 					break;
 					
-				} else if (placeholder2 == 2) {
+				} else if (currentState == 2) {
 					return true;
 				}
-		/*		
-				if(checkDiagonally((x - corrector), y, y, player) == 1) {
-					break;
-				}
-				
-				if(checkDiagonally((x - corrector), y, y, player) == 2) {
-					return true;
-					
-				} else {
-					corrector -= 1;
-				}
-		*/	}
+			}
 		}
-		
 		resetCounters();
 		checkNewRow = 0;
 	
-		
 		for(int y = 0; y <= size; y++) {
 			for(int x = size; x >= 0; x--) {
-				System.out.print("DownLeftAndra    ");
-				if(this.gameGrid[y + corrector][x] == EMPTY) {
-					System.out.println("2   EMPTY (" + x + ", " + (y + corrector) + ")   " + "corrector2 = " + corrector + "   new row = " + checkNewRow);
+				if(this.gameGrid[y + corrector][x] == EMPTY || this.gameGrid[y + corrector][x] != player) {
 					currentINROW = 0;
 					corrector += 1;
-					
 					
 				} else if(this.gameGrid[y + corrector][x] == player) {
 					currentINROW += 1;
 					corrector += 1;
-					
 				}
 				
 				if(checkIfWinner(currentINROW) == true) {
-					System.out.println("shouldnot");
 					resetCounters();
 					return true;
-				} 
+				}
+				
 				if(x == checkNewRow) {
 					checkNewRow += 1;
 					currentINROW = 0;
 					corrector = 0;
-					System.out.println("	break");
 					break;
 				}
 			}	
 		}
-		System.out.println("downleftdone");
 		resetCounters();
 		return false;
-		
-		
 	}
-	
 	
 	/**
 	 * Check if a player has 5 in row
@@ -326,14 +284,12 @@ public class GameGrid extends Observable{
 	 * @return true if player has 5 in row, false otherwise
 	 */
 											
-	public boolean isWinner(int player){		
+	public boolean isWinner(int player){
 		if(checkVertical(player) == true || checkHorizontal(player) == true || checkDiagonalDownRight(player) == true || checkDiagonalDownLeft(player) == true) {
 			return true;
 		
 		} else {
 			return false;
-		}
-		
-	}
-	
+		}	
+	}	
 }

@@ -29,7 +29,6 @@ public class GamePanel extends JPanel implements Observer{
 		this.setMinimumSize(d);
 		this.setPreferredSize(d);
 		this.setBackground(Color.DARK_GRAY);
-			
 	}
 
 	/**
@@ -58,15 +57,12 @@ public class GamePanel extends JPanel implements Observer{
 				if (grid.getLocation(y, x) == grid.ME) {
 					g.setColor(Color.BLACK);
 					g.fillOval(y*UNIT_SIZE, x*UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
-				} if(grid.getLocation(y, x) == grid.OTHER) {
+				} 
+				if(grid.getLocation(y, x) == grid.OTHER) {
 					g.setColor(Color.WHITE);
 					g.fillOval(y*UNIT_SIZE, x*UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
-				//	g.drawLine(x, y, x+UNIT_SIZE, y+ UNIT_SIZE);
-					//g.drawLine(x+UNIT_SIZE, y, x, y+ UNIT_SIZE);
-					}
 				}
 			}
-		
 		}
-	
 	}
+}

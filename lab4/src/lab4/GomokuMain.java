@@ -21,18 +21,11 @@ public class GomokuMain {
 			System.exit(-1);
 			
 		}
-
-		
 		int port = Integer.parseInt(args[0]);
-		
-		
-//		GameGrid g = new GameGrid(15);
-//		g.isWinner(1);
 		
 		if(args.equals(null)) {
 			System.out.println("The port you entered didnt exist, default port used");
-			port = 5012;
-			
+			port = 5012;	
 		}
 		
 		GomokuClient client = new GomokuClient(port);
@@ -41,10 +34,6 @@ public class GomokuMain {
 		GomokuClient client2 = new GomokuClient(4040);
 		GomokuGameState gameState2 = new GomokuGameState(client2);
 		GomokuGUI gui2 = new GomokuGUI(gameState2, client2);
-		
-		
-		
 	}
-
 }
 
